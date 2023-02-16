@@ -6,9 +6,9 @@ Transient heat equation with fixed temperature at one end.
 
 Solved with: 
 - scikit-fem (second order elements and Crank-Nicolson time integration)
-- nutils (second degree spline elements and Crank-Nicolson time integration)
-- tensorflow (PINN with 5 fully connected hidden layers)
-- pytorch (PINN with 5 fully connected hidden layers)
+- nutils_iga (second degree spline elements and Crank-Nicolson time integration)
+- tensorflow (PINN with five fully connected hidden layers)
+- pytorch (PINN with five fully connected hidden layers)
 
 ![heat transfer](heat_transfer_1d.png)
 
@@ -20,7 +20,7 @@ Solved with:
 - scikit-fem (first order elements)
 - nutils (second order standard elements)
 - nutils_iga (second order spline elements)
-- tensorflow (PINN with 5 fully connected hidden layers)
-- pytorch (PINN with 5 fully connected hidden layers)
+- tensorflow (PINN with five fully connected hidden layers)
+- pytorch (PINN with five fully connected hidden layers)
 
 ![plate hole](plate_hole_2d.png)
