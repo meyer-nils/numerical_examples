@@ -18,7 +18,8 @@ Elastic problem of a simple plate with a hole.
 
 Solved with: 
 - scikit-fem (first order elements)
-- nutils (second order elements)
+- nutils (second order standard elements)
+- nutils_iga (second order spline elements)
 - tensorflow (PINN with 5 fully connected hidden layers)
 - pytorch (PINN with 5 fully connected hidden layers)
 
