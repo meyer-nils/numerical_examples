@@ -4,3 +4,4 @@ __pycache__
 *.vtk
 *.xdmf 
 *.h5
+*.pptx
