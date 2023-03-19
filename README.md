@@ -6,6 +6,7 @@ Transient heat equation with fixed temperature at one end.
 
 Solved with: 
 - scikit-fem (second order elements and Crank-Nicolson time integration)
+- Nutils (second order standard elements and Crank-Nicolson time integration)
 - Nutils (IGA with second degree spline elements and Crank-Nicolson time integration)
 - FEniCSx (first order elements and implicit time integration)
 - TensorFlow (PINN with five fully connected hidden layers)
