@@ -6,18 +6,18 @@ Transient heat equation with fixed temperature at one end.
 
 Solved with: 
 - scikit-fem (second order elements and Crank-Nicolson time integration)
-- nutils_iga (second degree spline elements and Crank-Nicolson time integration)
-- fenicsx (first order elements and implicit time integration)
-- tensorflow (PINN with five fully connected hidden layers)
-- pytorch (PINN with five fully connected hidden layers)
+- Nutils (IGA with second degree spline elements and Crank-Nicolson time integration)
+- FEniCSx (first order elements and implicit time integration)
+- TensorFlow (PINN with five fully connected hidden layers)
+- PyTorch (PINN with five fully connected hidden layers)
 
 ## Two-dimensional plate hole example
 Elastic problem of a simple plate with a hole.
 
 Solved with: 
 - scikit-fem (first order elements)
-- nutils (second order standard elements)
-- nutils_iga (second order spline elements)
-- fenicsx (first order elements)
-- tensorflow (PINN with five fully connected hidden layers)
-- pytorch (PINN with five fully connected hidden layers)
+- Nutils (second order standard elements)
+- Nutils (IGA with second order spline elements)
+- FEniCSx (first order elements)
+- TensorFlow (PINN with five fully connected hidden layers)
+- PyTorch (PINN with five fully connected hidden layers)
