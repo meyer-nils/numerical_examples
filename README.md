@@ -21,6 +21,7 @@ Solved with:
 - scikit-fem (first order elements)
 - nutils (second order standard elements)
 - nutils_iga (second order spline elements)
+- fenicsx (first order elements)
 - tensorflow (PINN with five fully connected hidden layers)
 - pytorch (PINN with five fully connected hidden layers)
 
