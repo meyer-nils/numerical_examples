@@ -11,9 +11,6 @@ Solved with:
 - tensorflow (PINN with five fully connected hidden layers)
 - pytorch (PINN with five fully connected hidden layers)
 
-![heat transfer](heat_transfer_1d.png)
-
-
 ## Two-dimensional plate hole example
 Elastic problem of a simple plate with a hole.
 
@@ -24,5 +21,3 @@ Solved with:
 - fenicsx (first order elements)
 - tensorflow (PINN with five fully connected hidden layers)
 - pytorch (PINN with five fully connected hidden layers)
-
-![plate hole](plate_hole_2d.png)
