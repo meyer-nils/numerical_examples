@@ -37,7 +37,6 @@ class Plate:
         plt.grid(color='lightgray',linestyle='--')
         plt.show()
 
-
     def plot_quarter_elli(self, Re_x, Re_y):
         t = np.linspace(0, 0.5*pi, 80)
         plt.plot( Re_x*np.cos(t) , Re_y*np.sin(t) )
@@ -73,33 +72,50 @@ class Plate:
 
         n_hole = torch.tensor(np.stack([-np.cos(phi), -np.sin(phi)]).T).float()
         boundary_points= [x_top, y_top, x_right, y_right, x_left, y_left, x_bottom, y_bottom, x_hole, y_hole, n_hole]
+        return collo_points, boundary_points
+    
+    def generate_dataset_test(self, Re_x, Re_y, L, N):
+        # Create collocation points
+        points = L * qmc.LatinHypercube(d=2).random(N**2)
 
+        #excludes points that are inside the elliptical hole
+        points = points[(((points[:,0] ** 2)/(Re_x**2)) + ((points[:,1] ** 2)/(Re_y**2))) > 1]
+        x_collocation = torch.tensor(points[:,0], requires_grad=True).float()
+        y_collocation = torch.tensor(points[:,1], requires_grad=True).float()
+        collo_points = [x_collocation, y_collocation]
+        # Boundaries
+        x_top = torch.linspace(0, L, N, requires_grad=True)
+        y_top = L * torch.ones((N, 1), requires_grad=True)
+
+        x_right = L * torch.ones((N, 1))
+        y_right = torch.linspace(0, L, N)
+
+        x_left = torch.zeros(ceil(N*(1-Re_y)), 1)
+        y_left = torch.linspace(Re_y, L, ceil(N*(1-Re_y)))
+
+        x_bottom = torch.linspace(Re_x, L, ceil(N*(1-Re_x)))
+        y_bottom = L * torch.zeros(ceil(N*(1-Re_x)), 1)
+
+        phi = np.linspace(0, 0.5 * np.pi, int(N * 0.5 * np.pi * Re_x / L)* 20)
+        x_hole = torch.tensor(Re_x * np.cos(phi), requires_grad=True).float()
+        y_hole = torch.tensor(Re_y * np.sin(phi), requires_grad=True).float()
+
+        n_hole = torch.tensor(np.stack([-np.cos(phi), -np.sin(phi)]).T).float()
+        boundary_points= [x_top, y_top, x_right, y_right, x_left, y_left, x_bottom, y_bottom, x_hole, y_hole, n_hole]
         return collo_points, boundary_points
 
     def plot_plate_with_hole(self, collo_points, boundary_points):
         # Visualize geometry (Dirichlet blue, Neumann red)
         plt.plot(collo_points[0].detach(), collo_points[1].detach(), ".k")
+        #top 
         plt.plot(boundary_points[0].detach(), boundary_points[1].detach(), ".r")
-        plt.plot(boundary_points[6], boundary_points[7], ".g")
-        plt.plot(boundary_points[4], boundary_points[5], ".b")
+        #right
         plt.plot(boundary_points[2], boundary_points[3], ".b")
+        #bottom
+        plt.plot(boundary_points[6], boundary_points[7], ".g")
+        #left
+        plt.plot(boundary_points[4], boundary_points[5], ".b")
+        #hole
         plt.plot(boundary_points[8].detach(), boundary_points[9].detach(), ".r")
         plt.axis("equal")
         plt.show()
-
-
-
-
-Re_x = 0.3 #radius on the x-axis of the ellipse 
-SuAr= 0.25*pi   #surface area of the eclipse (= equal to SuAr of a circle with R=0.5)
-L = 1 #length of plate #info: muss noch gefixt werden -> momentan bei 1 lassen
-N = 40 #number of collocation Point in x-axis direction
-NN = ceil(N * (L-Re_x)/L) #number of collocation Point in both direction
-
-p1 = Plate(0.3, SuAr, 1, 40)
-Re_xnew, Re_ynew = p1.create_ellipse(Re_x,SuAr, L)
-p1.plot_quarter_elli(Re_xnew, Re_ynew)
-data_test_points = p1.generate_dataset(Re_xnew, Re_ynew, L, N)
-data_train_points = p1.generate_dataset(Re_xnew, Re_ynew, L, N)
-p1.plot_plate_with_hole(*data_test_points)
-p1.plot_plate_with_hole(*data_train_points)
