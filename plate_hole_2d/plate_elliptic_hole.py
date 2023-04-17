@@ -96,7 +96,7 @@ class Plate:
         x_bottom = torch.linspace(Re_x, L, ceil(N*(1-Re_x)))
         y_bottom = L * torch.zeros(ceil(N*(1-Re_x)), 1)
 
-        phi = np.linspace(0, 0.5 * np.pi, int(N * 0.5 * np.pi * Re_x / L)* 20)
+        phi = np.linspace(0, 0.5 * np.pi, int(N * 0.5 * np.pi * Re_x / L))
         x_hole = torch.tensor(Re_x * np.cos(phi), requires_grad=True).float()
         y_hole = torch.tensor(Re_y * np.sin(phi), requires_grad=True).float()
 
