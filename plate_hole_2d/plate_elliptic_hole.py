@@ -55,7 +55,7 @@ class Plate:
         collo_points = [x_collocation, y_collocation]
         # Boundaries
         x_top = torch.linspace(0, L, N, requires_grad=True)
-        y_top = L * torch.ones((N, 1), requires_grad=True)
+        y_top = L * torch.ones((N, 1), requires_grad=True) 
 
         x_right = L * torch.ones((N, 1))
         y_right = torch.linspace(0, L, N)
@@ -72,7 +72,7 @@ class Plate:
 
         n_hole = torch.tensor(np.stack([-np.cos(phi), -np.sin(phi)]).T).float()
         boundary_points= [x_top, y_top, x_right, y_right, x_left, y_left, x_bottom, y_bottom, x_hole, y_hole, n_hole]
-        return collo_points, boundary_points
+        return [collo_points, boundary_points]
     
     def generate_dataset_test(self, Re_x, Re_y, L, N):
         # Create collocation points
