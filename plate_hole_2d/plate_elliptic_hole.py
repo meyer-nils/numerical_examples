@@ -47,31 +47,41 @@ class Plate:
     def generate_dataset(self, Re_x, Re_y, L, N):
         # Create collocation points
         points = L * qmc.LatinHypercube(d=2).random(N**2)
-
         #excludes points that are inside the elliptical hole
         points = points[(((points[:,0] ** 2)/(Re_x**2)) + ((points[:,1] ** 2)/(Re_y**2))) > 1]
         x_collocation = torch.tensor(points[:,0], requires_grad=True).float()
         y_collocation = torch.tensor(points[:,1], requires_grad=True).float()
-        collo_points = [x_collocation, y_collocation]
+        r_collocation = Re_x*torch.ones_like(x_collocation)
+        collo_points = [x_collocation, y_collocation, r_collocation]
         # Boundaries
         x_top = torch.linspace(0, L, N, requires_grad=True)
         y_top = L * torch.ones((N, 1), requires_grad=True) 
+        r_top = Re_x * torch.ones_like(x_top)
+        top_points = [x_top, y_top, r_top]
 
         x_right = L * torch.ones((N, 1))
         y_right = torch.linspace(0, L, N)
+        r_right = Re_x * torch.ones_like(x_right)
+        right_points = [x_right, y_right, r_right]
 
         x_left = torch.zeros(ceil(N*(1-Re_y)), 1)
         y_left = torch.linspace(Re_y, L, ceil(N*(1-Re_y)))
+        r_left = Re_x * torch.ones_like(x_left)
+        left_points = [x_left, y_left, r_left]
 
         x_bottom = torch.linspace(Re_x, L, ceil(N*(1-Re_x)))
         y_bottom = L * torch.zeros(ceil(N*(1-Re_x)), 1)
+        r_bottom = Re_x * torch.ones_like(r_bottom)
+        bottom_points = [x_bottom, y_bottom, r_bottom]
 
         phi = np.linspace(0, 0.5 * np.pi, int(N * 0.5 * np.pi * Re_x / L))
         x_hole = torch.tensor(Re_x * np.cos(phi), requires_grad=True).float()
         y_hole = torch.tensor(Re_y * np.sin(phi), requires_grad=True).float()
-
         n_hole = torch.tensor(np.stack([-np.cos(phi), -np.sin(phi)]).T).float()
-        boundary_points= [x_top, y_top, x_right, y_right, x_left, y_left, x_bottom, y_bottom, x_hole, y_hole, n_hole]
+        r_hole = Re_x * torch.ones_like(x_hole)
+        hole_points = [x_hole, y_hole, n_hole, r_hole]
+        
+        boundary_points= [top_points, right_points, left_points, bottom_points, hole_points]
         return collo_points, boundary_points
     
     def generate_dataset_test(self, Re_x, Re_y, L, N):
@@ -106,6 +116,7 @@ class Plate:
 
     def plot_plate_with_hole(self, collo_points, boundary_points):
         # Visualize geometry (Dirichlet blue, Neumann red)
+        # boundary = [x_top, y_top, x_right, y_right, x_left, y_left, x_bottom, y_bottom, x_hole, y_hole, n_hole]
         plt.plot(collo_points[0].detach(), collo_points[1].detach(), ".k")
         #top 
         plt.plot(boundary_points[0].detach(), boundary_points[1].detach(), ".r")
