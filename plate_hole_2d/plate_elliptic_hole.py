@@ -26,8 +26,8 @@ class Plate:
                 print("y_radius was not in range between 0 and max_length")
                 continue
             else: break
-        print("radius x-axis: ",Re_x)
-        print("radius y-axis: ",Re_y)
+        #print("radius x-axis: ",Re_x)
+        #print("radius y-axis: ",Re_y)
         return Re_x,Re_y
     
     def plot_ellipse(self, Re_x, Re_y):
