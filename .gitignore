@@ -5,3 +5,6 @@ __pycache__
 *.xdmf 
 *.h5
 *.pptx
+
+# uv environment (uv.lock and .python-version are committed for reproducibility)
+.venv

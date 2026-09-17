@@ -1,0 +1,28 @@
+[project]
+name = "numerical-examples"
+version = "0.1.0"
+description = "Application of several numerical algorithms and tools in Python to engineering problems."
+readme = "README.md"
+authors = [{ name = "Nils Meyer", email = "nils.meyer@uni-a.de" }]
+requires-python = ">=3.12"
+dependencies = [
+    "deepxde",
+    "ipykernel",
+    "ipywidgets",
+    "jupyterlab",
+    "matplotlib",
+    "numpy",
+    "nutils",
+    "pygmsh",
+    "pyvista[jupyter]",
+    "scikit-fem",
+    "scipy",
+    "tensorflow",
+    "torch",
+    "torch-fem",
+    "tqdm",
+]
+
+# A collection of example notebooks, not an installable package.
+[tool.uv]
+package = false
